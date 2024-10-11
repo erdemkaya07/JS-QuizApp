@@ -5,19 +5,60 @@ const questionsList = [
   new Question('4-Which one does not use the Javascript programming language?' , {a: 'React', b:'Angular', c:'VueJs', d:'Asp.net'}, "d"),
 ];
 
-
-
 const quiz = new Quiz(questionsList);
 const ui = new UI();
 
-document.getElementById('btnQuestionBring').addEventListener('click', function() {
+ui.btnStart.addEventListener('click', function(){
+  ui.quizBox.classList.add('active');
+  ui.btnBox.classList.remove('active');
+  //Sorulari goster
+  ui.displayQuestion(quiz.questionBring())
+  ui.questionNumberDisplay(quiz.questionsIndex + 1, quiz.questions.length)
+})
+
+ui.btnNext.addEventListener('click', function() {
   if(quiz.questions.length != quiz.questionsIndex){
     ui.displayQuestion(quiz.questionBring())
-    quiz.questionsIndex += 1;
+    ui.questionNumberDisplay(quiz.questionsIndex + 1, quiz.questions.length)
+  } else {
+    ui.scoreBox.classList.add('active')
+    ui.quizBox.classList.remove('active')
+    ui.scoreDisplay(quiz.correctQuestionOrder, quiz.questions.length)
+  }
+})
+
+function optionSelected(e){
+
+  let selectedElement = e.target
+  if(selectedElement.nodeName == "SPAN"){
+    selectedElement = selectedElement.parentElement
   }
 
-}) 
+  const answer = e.target.textContent[0]
+  const question = quiz.questionBring()
+  if(question.answerControl(answer)) {
+    quiz.correctQuestionOrder += 1;
+    selectedElement.classList.add('correct');
+    selectedElement.insertAdjacentHTML('beforeend', ui.correct)
+  } else {
+    selectedElement.classList.add('inCorrect');
+    selectedElement.insertAdjacentHTML('beforeend', ui.inCorrect)
+  }
+  quiz.questionsIndex += 1;
+  ui.disableAllOption();
+}
 
+ui.btnQuit.addEventListener('click', function(){
+  window.location.reload();
+})
+
+ui.btnReplay.addEventListener('click', function(){
+  quiz.questionsIndex = 0;
+  quiz.correctQuestionOrder = 0;
+  //Start button
+  ui.btnStart.click();
+  ui.scoreBox.classList.remove('active')
+})
 
 
 

@@ -9,11 +9,64 @@
 .option-list {
   padding: 1.2rem .7rem;
   .option {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     border: 1px solid #151d3b;
     border-radius: 5px;
     padding: .5rem 1rem;
     font-size: 1.2rem;
     margin-bottom: .7rem;
     cursor: pointer;
+    &:hover, &:focus {
+      color: #112b2c;
+      background-color: #ffd33d;
+    }
   }
+  
+  .disabled {
+    pointer-events: none;
+  }
+}
+
+.option-list .option.correct {
+  background-color: rgb(221, 252, 213);
+  color: green;
+}
+.option-list .option.inCorrect {
+  background-color: rgb(255, 209, 209);
+  color: red;
+}
+
+.summary {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+#score-box {
+  text-align: center;
+  padding: 2rem;
+  i {
+    font-size: 7rem;
+    color: rgb(57, 69, 245);
+    margin-bottom: 1rem;
+  }
+  .score-text {
+    font-size: 1.2rem;
+    font-weight: 500;
+    margin-bottom: .8rem;
+  }
+}
+
+.btn-start{
+  text-align: center;
+}
+
+#button-box, #quiz-box, #score-box {
+  display: none;
+}
+
+#button-box.active, #quiz-box.active, #score-box.active {
+  display: block;
 }
