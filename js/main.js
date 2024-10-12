@@ -26,6 +26,7 @@ ui.btnNext.addEventListener('click', function() {
     ui.displayQuestion(quiz.questionBring())
     ui.questionNumberDisplay(quiz.questionsIndex + 1, quiz.questions.length)
     ui.btnNext.classList.remove('show')
+    //yeni soru da 'Time expired!' yazisini degistir
     ui.timeText.textContent = "Remaining time"
   } else {
     ui.scoreBox.classList.add('active')
