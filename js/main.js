@@ -9,17 +9,21 @@ const quiz = new Quiz(questionsList);
 const ui = new UI();
 
 ui.btnStart.addEventListener('click', function(){
+  startTimer(10)
   ui.quizBox.classList.add('active');
   ui.btnBox.classList.remove('active');
   //Sorulari goster
   ui.displayQuestion(quiz.questionBring())
   ui.questionNumberDisplay(quiz.questionsIndex + 1, quiz.questions.length)
+  ui.btnNext.classList.remove('show')
 })
 
 ui.btnNext.addEventListener('click', function() {
+  startTimer(10)
   if(quiz.questions.length != quiz.questionsIndex){
     ui.displayQuestion(quiz.questionBring())
     ui.questionNumberDisplay(quiz.questionsIndex + 1, quiz.questions.length)
+    ui.btnNext.classList.remove('show')
   } else {
     ui.scoreBox.classList.add('active')
     ui.quizBox.classList.remove('active')
@@ -28,7 +32,8 @@ ui.btnNext.addEventListener('click', function() {
 })
 
 function optionSelected(e){
-
+  //Bir secenek secildiginde sureyi durdur
+  clearInterval(counter);
   let selectedElement = e.target
   if(selectedElement.nodeName == "SPAN"){
     selectedElement = selectedElement.parentElement
@@ -46,6 +51,7 @@ function optionSelected(e){
   }
   quiz.questionsIndex += 1;
   ui.disableAllOption();
+  ui.btnNext.classList.add('show')
 }
 
 ui.btnQuit.addEventListener('click', function(){
@@ -60,6 +66,25 @@ ui.btnReplay.addEventListener('click', function(){
   ui.scoreBox.classList.remove('active')
 })
 
+//Geri sayma fonksiyonu
+let counter;
+function startTimer(time) {
+  counter = setInterval(timer, 1000);
+  function timer() {
+    /* console.log(time); */
+    ui.timeSecond.textContent = time;
+    time--;
+    if(time < 0) {
+      clearInterval(counter)
+      ui.timeText.textContent = 'Time expired!';
+      //Secim secenekler disable olur
+      ui.disableAllOption();
+      //bir sonraki soruya gecis hakki verilir
+      quiz.questionsIndex += 1;
+      ui.btnNext.classList.add('show')
+    }
+  }
+}
 
 
 

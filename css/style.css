@@ -70,3 +70,28 @@
 #button-box.active, #quiz-box.active, #score-box.active {
   display: block;
 }
+
+.time {
+  background-color: #014e12;
+  color: white;
+  padding: .3rem;
+  border-radius: 5px;
+  .time-text {
+    padding-right: .9rem;
+    padding-left: .5rem;
+  }
+  .time-second {
+    padding-inline: .3rem;
+    background-color: red;
+    border-radius: 5px;
+    font-weight: 700;
+  }
+}
+
+.btn-next {
+  display: none;
+}
+.btn-next.show {
+  display: block;
+}
+
