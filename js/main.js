@@ -10,6 +10,7 @@ const ui = new UI();
 
 ui.btnStart.addEventListener('click', function(){
   startTimer(10)
+  startTimeLine()
   ui.quizBox.classList.add('active');
   ui.btnBox.classList.remove('active');
   //Sorulari goster
@@ -20,10 +21,12 @@ ui.btnStart.addEventListener('click', function(){
 
 ui.btnNext.addEventListener('click', function() {
   startTimer(10)
+  startTimeLine()
   if(quiz.questions.length != quiz.questionsIndex){
     ui.displayQuestion(quiz.questionBring())
     ui.questionNumberDisplay(quiz.questionsIndex + 1, quiz.questions.length)
     ui.btnNext.classList.remove('show')
+    ui.timeText.textContent = "Remaining time"
   } else {
     ui.scoreBox.classList.add('active')
     ui.quizBox.classList.remove('active')
@@ -34,6 +37,7 @@ ui.btnNext.addEventListener('click', function() {
 function optionSelected(e){
   //Bir secenek secildiginde sureyi durdur
   clearInterval(counter);
+  clearInterval(counterLine)
   let selectedElement = e.target
   if(selectedElement.nodeName == "SPAN"){
     selectedElement = selectedElement.parentElement
@@ -82,6 +86,20 @@ function startTimer(time) {
       //bir sonraki soruya gecis hakki verilir
       quiz.questionsIndex += 1;
       ui.btnNext.classList.add('show')
+    }
+  }
+}
+
+let counterLine;
+function startTimeLine() {
+  let lineWidth = 0;
+  counterLine = setInterval(timer, 20);
+
+  function timer() {
+    lineWidth += 1;
+    ui.timeLine.style.width = lineWidth + "px";
+    if(lineWidth > 549){
+      clearInterval(counterLine)
     }
   }
 }
